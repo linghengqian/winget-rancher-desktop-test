@@ -4,8 +4,8 @@
 
 - Just execute `test.yaml` in GitHub Actions for fork git.
 
-- The log is as follows,
+- The log is as follows. Also see https://github.com/linghengqian/winget-rancher-desktop-test/actions/runs/16796545246/job/47568331979 .
+
 ```shell
 
 ```
-- Also see.
