@@ -1,0 +1,24 @@
+name: Test
+on:
+  pull_request:
+    branches:
+      - master
+  push:
+    branches:
+      - master
+  workflow_dispatch:
+jobs:
+  test-ci:
+    name: Test - on ${{ matrix.os }}
+    strategy:
+      matrix:
+        os: [ 'windows-2025' ]
+    runs-on: ${{ matrix.os }}
+    steps:
+      - uses: actions/checkout@v4
+      - name: Uninstall Docker Engine for WCOW and init WingetPathUpdater
+        run: |
+          ./helpful_tools/uninstall-docker-engine-for-wcow.ps1
+          winget install --id jazzdelightsme.WingetPathUpdater --source winget
+      - name: Install Rancher Desktop without GUI on Windows Server
+        run: winget install --id SUSE.RancherDesktop --source winget
