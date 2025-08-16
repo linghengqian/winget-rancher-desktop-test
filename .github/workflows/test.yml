@@ -16,15 +16,17 @@ jobs:
     runs-on: ${{ matrix.os }}
     steps:
       - uses: actions/checkout@v4
-      - name: Setup Rancher Desktop
+      - name: Prepare Rancher Desktop
         run: |
           ./helpful_tools/uninstall-docker-engine-for-wcow.ps1
           winget install --id jazzdelightsme.WingetPathUpdater --source winget
+      - name: Install Rancher Desktop
+        run: |
           winget install --id SUSE.RancherDesktop --source winget
+      - name: Test Rancher Desktop
+        run: |
           rdctl start --application.start-in-background --container-engine.name=moby --kubernetes.enabled=false
           ./helpful_tools/wait-for-rancher-desktop-backend.ps1
           "PATH=$env:PATH" >> $env:GITHUB_ENV
-      - name: Test Rancher Desktop
-        run: |
           docker context ls
           docker run hello-world:linux
